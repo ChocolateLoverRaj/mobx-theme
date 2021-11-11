@@ -10,7 +10,7 @@
   },
   "name": "mobx-theme",
   "description": "Simple, flexible, reactive mobx theme detector and switcher.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/ChocolateLoverRaj/mobx-theme#readme",
   "license": "MIT",
   "repository": {
