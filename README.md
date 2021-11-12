@@ -53,4 +53,4 @@ render(<Component />, document.getElementById('app'))
 ```
 
 ## Typedoc
-https://chocolateloverraj/github.io/mobx-theme
+https://chocolateloverraj.github.io/mobx-theme
