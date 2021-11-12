@@ -8,22 +8,22 @@ Simple, flexible, reactive mobx theme detector and switcher.
 - Uses [`prefers-color-scheme`](https://stackoverflow.com/a/57795495/11145447) to detect initial theme
 - Saves selected theme to local storage for the next page load.
 - Updates theme between tabs (this is a feature of [`mobx-localstorage`](https://npmjs.com/package/mobx-localstorage))
+- Updates theme when preferred color scheme changes (this is a feature of [`mobx-matchmedia`](https://npmjs.com/package/mobx-matchmedia))
 - You can add more themes in addition to `'light'` and `'dark'`
 
 ## Example
 This example uses [Webpack `style-loader` with `lazyStyleTag`](https://webpack.js.org/loaders/style-loader/#lazystyletag). You can see the complete folder in the `demo` dir.
-```js
+```jsx
 import { Theme } from 'mobx-theme'
 import light from './light.lazy.css'
 import dark from './dark.lazy.css'
 import { autorunCleanup } from 'mobx-autorun-cleanup'
-import { autorun } from 'mobx'
+import { render } from 'react-dom'
+import { observer } from 'mobx-react-lite'
 
 const themes = { dark, light }
 
 const theme = new Theme()
-
-const button = document.createElement('button')
 
 autorunCleanup(() => {
   const currentTheme = theme.theme
@@ -35,15 +35,21 @@ autorunCleanup(() => {
   }
 })
 
-autorun(() => {
-  const switchesTo = theme.theme === 'dark' ? 'light' : 'dark'
-  button.innerText = `Switch to ${switchesTo} theme`
-  button.onclick = () => {
-    theme.theme = switchesTo
-  }
-})
+const Component = observer(() => (
+  <select
+    value={theme.selectedTheme ?? 'system'}
+    onChange={({ target: { value } }) => {
+      theme.selectedTheme = value === 'system' ? undefined : value
+    }}
+  >
+    <option value='dark'>Dark</option>
+    <option value='light'>Light</option>
+    <option value='system'>System</option>
+  </select>
+))
 
-document.body.appendChild(button)
+render(<Component />, document.getElementById('app'))
+
 ```
 
 ## Typedoc
