@@ -4,9 +4,6 @@ import { matchMedia } from 'mobx-matchmedia'
 
 export type DefaultThemes = 'dark' | 'light'
 
-export type ThemeCallback<T extends DefaultThemes extends T ? string : never = DefaultThemes> =
-(theme: T) => void
-
 export class Theme<T extends DefaultThemes extends T ? string : never = DefaultThemes> {
   static readonly lsKey = 'theme'
 
